@@ -141,7 +141,7 @@ public class ColorPickerDialog extends Dialog {
 
     @Override
     public void show() {
-        getWindow().setLayout(dpToPx(500), -2);
+        getWindow().setLayout(dpToPx(550), -2);
         super.show();
         reloadLastColor();
         if (opacityPicker.getVisibility() != View.VISIBLE)
@@ -288,6 +288,8 @@ public class ColorPickerDialog extends Dialog {
                     String v = getPlainComponentValue(val.getText().toString());
                     int a = Integer.parseInt(getPlainComponentValue(alpha.getText().toString()));
                     colorEditDialog.setModeAndValues(ColorEditDialog.MODE_HSV, h, s, v, a);
+                    colorEditDialog.setCancelButtonText(cancelButton.getText());
+                    colorEditDialog.setDoneButtonText(pickButton.getText());
                     colorEditDialog.show();
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -304,6 +306,8 @@ public class ColorPickerDialog extends Dialog {
                     String b = getPlainComponentValue(blue.getText().toString());
                     int a = Integer.parseInt(getPlainComponentValue(alpha.getText().toString()));
                     colorEditDialog.setModeAndValues(ColorEditDialog.MODE_RGB, r, g, b, a);
+                    colorEditDialog.setCancelButtonText(cancelButton.getText());
+                    colorEditDialog.setDoneButtonText(pickButton.getText());
                     colorEditDialog.show();
                 } catch (Exception e) {
                     e.printStackTrace();
