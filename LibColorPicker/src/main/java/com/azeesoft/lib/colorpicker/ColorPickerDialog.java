@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.Handler;
 import android.support.v7.view.ContextThemeWrapper;
 import android.support.v7.widget.AppCompatButton;
 import android.text.Editable;
@@ -79,6 +80,7 @@ public class ColorPickerDialog extends Dialog {
     private OnColorPickedListener onColorPickedListener;
     private OnClosedListener onClosedListener;
     private boolean isLandscape;
+    private Handler handler;
 
     private ColorPickerDialog(Context context) {
         super(context);
@@ -87,6 +89,7 @@ public class ColorPickerDialog extends Dialog {
 
     private ColorPickerDialog(Context context, int theme) {
         super(context, theme);
+        handler = new Handler();
         init(context);
     }
 
@@ -248,8 +251,7 @@ public class ColorPickerDialog extends Dialog {
             }
         });
 
-        huePicker.setMax(360);
-        huePicker.setProgress(0);
+        initHuePicker();
         huePicker.setColorPickerCompatScrollView(colorPickerCompatScrollView);
         huePicker.setColorPickerCompatHorizontalScrollView(colorPickerCompatHorizontalScrollView);
 
@@ -340,6 +342,24 @@ public class ColorPickerDialog extends Dialog {
 
         applyTheme();
 
+    }
+
+    private void initHuePicker() {
+        huePicker.setMax(360);
+        huePicker.setProgress(0);
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                float[] hsv = new float[3];
+                Color.colorToHSV(initColor, hsv);
+                int progress = (int) hsv[0];
+                if (progress < 1) {
+                    huePicker.setProgress(360);
+                } else {
+                    huePicker.setProgress(progress);
+                }
+            }
+        }, 100);
     }
 
     private String getPlainComponentValue(String s) {

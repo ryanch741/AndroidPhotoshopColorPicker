@@ -24,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this,"color hex: "+hexVal,Toast.LENGTH_SHORT).show();
             }
         });
+        colorPickerDialog.setInitialColor(Color.parseColor("#ff348018"));
         colorPickerDialog.setNegativeActionText("取消");
         colorPickerDialog.setPositiveActionText("确定");
         colorPickerDialog.setHexaDecimalTextColor(Color.WHITE);
