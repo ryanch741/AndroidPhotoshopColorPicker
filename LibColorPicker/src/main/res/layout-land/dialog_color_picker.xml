@@ -3,71 +3,69 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
-    android:orientation="vertical"
+    android:orientation="horizontal"
     android:paddingLeft="15dp"
     android:paddingRight="15dp"
     android:paddingTop="5dp"
     android:layout_height="wrap_content">
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="15dp">
 
-            <com.azeesoft.lib.colorpicker.SatValPicker
-                android:id="@+id/satValBox"
-                android:tag="portrait"
-                android:layout_width="210dp"
-                android:layout_height="210dp">
-            </com.azeesoft.lib.colorpicker.SatValPicker>
-        </RelativeLayout>
-        <com.azeesoft.lib.colorpicker.HuePicker
-            android:id="@+id/hueBar"
-            android:layout_width="20dp"
-            android:layout_height="match_parent"
-            android:layout_alignParentTop="false"
-            android:layout_marginLeft="20dp"
-            android:layout_toRightOf="@+id/satValBox"
-            android:background="@drawable/transparent"
-            android:indeterminate="false"
-            android:max="360"
-            android:maxWidth="25dp"
-            android:maxHeight="25dp"
-            android:minWidth="25dp"
-            android:minHeight="25dp"
-            android:progress="1"
-            android:progressDrawable="@drawable/transparent"
-            android:splitTrack="false"
-            android:thumb="@drawable/slider_thumb"
-            app:orientation="vertical"
-            tools:ignore="UnusedAttribute" />
-        <com.azeesoft.lib.colorpicker.OpacityPicker
-            android:id="@+id/opacityBar"
-            android:layout_width="20dp"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="20dp"
-            android:layout_toRightOf="@+id/hueBar"
-            android:max="255"
-            android:maxWidth="25dp"
-            android:maxHeight="25dp"
-            android:minWidth="25dp"
-            android:minHeight="25dp"
-            android:progress="255"
-            android:progressDrawable="@drawable/opacity_box_bg_land"
-            android:splitTrack="false"
-            android:thumb="@drawable/slider_thumb"
-            app:orientation="vertical" />
-    </LinearLayout>
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_marginBottom="15dp"
+        android:layout_marginTop="16dp">
+        <com.azeesoft.lib.colorpicker.SatValPicker
+            android:tag="landscape"
+            android:layout_width="220dp"
+            android:layout_height="220dp"
+            android:id="@+id/satValBox">
+        </com.azeesoft.lib.colorpicker.SatValPicker>
+    </RelativeLayout>
+    <com.azeesoft.lib.colorpicker.HuePicker
+        android:layout_width="20dp"
+        android:layout_height="match_parent"
+        android:id="@+id/hueBar"
+        android:indeterminate="false"
+        android:layout_alignParentTop="false"
+        android:progress="1"
+        android:background="@drawable/transparent"
+        android:minWidth="25dp"
+        android:maxWidth="25dp"
+        android:minHeight="25dp"
+        android:maxHeight="25dp"
+        android:splitTrack="false"
+        android:progressDrawable="@drawable/transparent"
+        android:thumb="@drawable/slider_thumb"
+        android:max="360"
+        tools:ignore="UnusedAttribute"
+        android:layout_marginLeft="20dp"
+        android:layout_toRightOf="@+id/satValBox"
+        app:orientation="vertical"/>
+
+    <com.azeesoft.lib.colorpicker.OpacityPicker
+        android:layout_width="20dp"
+        android:layout_height="match_parent"
+        android:id="@+id/opacityBar"
+        android:progress="255"
+        android:max="255"
+        android:minWidth="25dp"
+        android:maxWidth="25dp"
+        android:minHeight="25dp"
+        android:maxHeight="25dp"
+        android:progressDrawable="@drawable/opacity_box_bg_land"
+        android:thumb="@drawable/slider_thumb"
+        android:splitTrack="false"
+        android:layout_toRightOf="@+id/hueBar"
+        android:layout_marginLeft="20dp"
+        app:orientation="vertical"/>
+
+    <RelativeLayout
+        android:layout_width="170dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp">
 
         <RelativeLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/previewWithHex"
             android:layout_alignParentTop="true">
@@ -78,6 +76,8 @@
                 android:id="@+id/preview"
                 android:layout_alignParentLeft="false"
                 android:layout_marginLeft="10dp"
+                android:layout_marginTop="20dp"
+                android:layout_below="@+id/hexHolder"
                 android:layout_centerHorizontal="true">
 
                 <ImageView
@@ -112,37 +112,38 @@
             </RelativeLayout>
 
             <RelativeLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="60dp"
+                android:layout_marginTop="10dp"
+                android:layout_alignParentTop="true"
                 android:id="@+id/hexHolder"
                 android:layout_marginBottom="10dp"
                 android:layout_centerHorizontal="true">
 
                 <LinearLayout
+                    android:orientation="horizontal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:orientation="horizontal">
+                    android:layout_centerInParent="true">
 
                     <TextView
-                        android:id="@+id/hex"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:text="#"
+                        android:id="@+id/hex"
+                        android:layout_marginRight="0dp"
                         android:layout_alignParentRight="false"
                         android:layout_centerInParent="true"
-                        android:layout_marginRight="0dp"
-                        android:text="#"
                         android:textSize="17sp" />
 
                     <EditText
-                        android:id="@+id/hexVal"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:inputType="textNoSuggestions|textCapCharacters"
                         android:minWidth="60dp"
+                        android:id="@+id/hexVal"
+                        android:textSize="17sp"
                         android:singleLine="true"
-                        android:textSize="17sp" />
+                        android:inputType="textNoSuggestions|textCapCharacters" />
 
                 </LinearLayout>
             </RelativeLayout>
@@ -151,9 +152,10 @@
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="10dp"
-            android:id="@+id/colorComponents">
+            android:layout_below="@+id/previewWithHex"
+            android:layout_marginTop="25dp"
+            android:id="@+id/colorComponents"
+            android:layout_centerHorizontal="true">
 
             <LinearLayout
                 android:orientation="horizontal"
@@ -263,5 +265,5 @@
                 </RelativeLayout>
             </LinearLayout>
         </RelativeLayout>
-    </LinearLayout>
+    </RelativeLayout>
 </LinearLayout>

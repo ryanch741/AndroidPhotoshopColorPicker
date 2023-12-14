@@ -78,6 +78,7 @@ public class ColorPickerDialog extends Dialog {
 
     private OnColorPickedListener onColorPickedListener;
     private OnClosedListener onClosedListener;
+    private boolean isLandscape;
 
     private ColorPickerDialog(Context context) {
         super(context);
@@ -141,7 +142,7 @@ public class ColorPickerDialog extends Dialog {
 
     @Override
     public void show() {
-        getWindow().setLayout(dpToPx(550), -2);
+        getWindow().setLayout(dpToPx(isLandscape ? 550 : 350), -2);
         super.show();
         reloadLastColor();
         if (opacityPicker.getVisibility() != View.VISIBLE)
@@ -197,7 +198,7 @@ public class ColorPickerDialog extends Dialog {
         colorPickerRootView = (ColorPickerRootView) findViewById(R.id.colorPickerRoot);
         hexVal = (EditText) findViewById(R.id.hexVal);
 
-
+        isLandscape = "landscape".equals(satValPicker.getTag());
         View hScrollView = findViewById(R.id.scrollView);
 
         if (hScrollView instanceof ColorPickerCompatScrollView)
