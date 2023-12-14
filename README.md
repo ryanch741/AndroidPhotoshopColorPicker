@@ -1,130 +1,51 @@
+# LibAndroidLog
 
-# AndroidPhotoshopColorPicker
+Android Log into file and log in monitor.
 
-[![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-AndroidPhotoshopColorPicker-green.svg?style=true)](https://android-arsenal.com/details/1/3143)
+## Getting started
 
+In your `build.gradle`:
 
-
-A full featured Color picker Library for Android! Just like the one in Photoshop!
-
-# Features
-
-* Hue bar - Adjust hue using a slider
-* Saturation & Value Box - Select the color from the Saturation & Value Box (like in Photoshop)
-* Alpha bar - Adjust the alpha using a slider
-* Preview - You can see the current selected and previously picked colors side-by-side
-* Edit each component individually - You can edit Hue, Saturation, Value, Red, Green and Blue components individually
-* Fully customizable - By default, there are two themes(Light and Dark). But you can define your own theme to customize the whole ColorPicker
-* Easy to use - All the hardwork is done by us. Just a few lines of code is all you have to do
-
-# Requirements
-
-Tested with APIv11, but will most probably work with earlier versions as well.
-
-# Installation (Adding to your project)
-
-The library is posted on jcenter. So, just the following code should be enough to get you started:
-
-Place this in your app module's build.gradle file:
-```groovy
-    dependencies {
-      compile 'com.azeesoft.lib.colorpicker:colorpicker:1.0.8@aar'
-    }
+```gradle
+ dependencies {
+   compile 'com.hianzuo.android:LibAndroidLogger:1.1.2'
+ }
 ```
-If there is any error while building the project using the above mentioned step, add the following code in that build.gradle file and build again:
-```groovy
-    repositories {
-        maven {
-            url 'https://dl.bintray.com/azeesoft/maven'
-        }
-    }
-```
-After successful build, you can use ColorPickerDialog as a part of your project.
 
-# Usage
+In your `Application` class:
 
-1. Create a new ColorPickerDialog object using the static method createColorPickerDialog()
-
-  To create a default ColorPickerDialog with Light theme, use
 ```java
-        ColorPickerDialog colorPickerDialog= ColorPickerDialog.createColorPickerDialog(this);
-```
-  To create a ColorPickerDialog with Dark theme, use
-```java
-        ColorPickerDialog colorPickerDialog= ColorPickerDialog.createColorPickerDialog(this,ColorPickerDialog.DARK_THEME);
-```
-2. Set an OnColorPickedListener to call when the color is picked:
-```java
-        colorPickerDialog.setOnColorPickedListener(new ColorPickerDialog.OnColorPickedListener() {
-            @Override
-            public void onColorPicked(int color, String hexVal) {
-                //Your code here
-            }
-        });
-```  
-3. Customize the colorPickerDialog if needed using appropriate methods and show the dialog:
-```java
-        colorPickerDialog.setHexaDecimalTextColor(Color.parse("#ffffff")); //There are many functions like this
-        colorPickerDialog.show();
-```
-4. To create a ColorPickerDialog with Custom theme, create a new style with any of the ColorPicker themes as parent and use the following attributes:
-  
- * cp_showOpacityBar (boolean) : Show/Hide Opacity Bar
- * cp_showHexaDecimalValue (boolean) : Show/Hide Hexadecimal Value
- * cp_showColorComponentsInfo (boolean) : Show/Hide Color components information(HSV, RGB, Alpha)
- * cp_backgroundColor (color) : Background color for the dialog
- * cp_hexaDecimalTextColor (color) : Text color for the Hexadecimal value
- * cp_colorComponentsTextColor (color) : Text color for the Color components information(HSV, RGB, Alpha) 
- * cp_positiveActionTextColor (color) : Text color for the Positive Action
- * cp_negativeActionTextColor (color) : Text color for the Negative Action
- * cp_sliderThumbColor (color) : Color for the thumb of the slider of Hue bar and Opacity bar
+public class ExampleApplication extends Application {
 
-  Use any of the following as parent:
-  
-  * ColorPicker
-  * ColorPicker.Dark
-  * ColorPicker.Light
-
-For eg:
-
-styles.xml:
-```xml
-    <style name="CustomColorPicker" parent="ColorPicker">
-        <item name="cp_backgroundColor">#4745e5</item>
-        <item name="cp_hexaDecimalTextColor">#000046</item>
-        <item name="cp_colorComponentsTextColor">#fff</item>
-        <item name="cp_positiveActionTextColor">@color/colorAccent</item>
-        <item name="cp_negativeActionTextColor">@color/colorPrimaryDark</item>
-        <item name="cp_sliderThumbColor">#accc</item>
-    </style>
+  @Override public void onCreate() {
+    super.onCreate();
+    LogServiceHelper.init(this, "LOG_PATH", "LOG_FILE_PREFIX");
+  }
+}
 ```
 
-In Java:
-```java
-    ColorPickerDialog colorPickerDialog = ColorPickerDialog.createColorPickerDialog(this,R.style.CustomColorPicker);
-    colorPickerDialog.setOnColorPickedListener(new ColorPickerDialog.OnColorPickedListener() {
-        @Override
-        public void onColorPicked(int color, String hexVal) {
-            System.out.println("Got color: " + color);
-            System.out.println("Got color in hex form: " + hexVal);
-            
-            // Make use of the picked color here
-        }
-    });
-    colorPickerDialog.show();
-```
-# Screenshots
-  
-![](raw/screen_1.jpg?raw=true "Light Theme")
+**You're good to go!**
 
-![](raw/screen_2.jpg?raw=true "Dark Theme")
 
-![](raw/screen_3.jpg?raw=true "HSV Editing - Light Theme")
+com.hianzuo.logger.Log.d(TAG,"message");
 
-![](raw/screen_4.jpg?raw=true "HSV Editing - Dark Theme")
+Will be log to your file and log in monitor now.
 
-![](raw/screen_5.jpg?raw=true "RGB Editing - Light Theme")
 
-![](raw/screen_6.jpg?raw=true "RGB Editing - Dark Theme")
- 
-  
+Questions? Check out [the FAQ](https://github.com/hianzuo/andorid-logger/wiki/FAQ)!
+
+## License
+
+    Copyright 2015 Square, Inc.
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.

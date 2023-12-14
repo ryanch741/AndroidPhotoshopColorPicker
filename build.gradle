@@ -1,75 +1,97 @@
-apply plugin: 'com.android.library'
-apply plugin: 'com.jfrog.bintray'
-apply plugin: 'com.github.dcendents.android-maven'
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
 
-
-android {
-    compileSdkVersion 23
-    buildToolsVersion "23.0.1"
-
-    defaultConfig {
-        minSdkVersion 11
-        targetSdkVersion 23
-        versionCode 9
-        versionName "1.0.9"
+buildscript {
+    repositories {
+        maven { url 'https://maven.aliyun.com/repository/public' }
+        maven { url 'https://maven.aliyun.com/repository/jcenter' }
+        maven { url 'https://maven.aliyun.com/repository/central' }
+        google()
     }
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+    dependencies {
+        classpath 'com.android.tools.build:gradle:3.5.2'
+
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
+    }
+}
+
+allprojects {
+    repositories {
+        mavenLocal()
+        maven {
+            credentials {
+                username '6291daabd12a1c69585d9f11'
+                password 'TX_BSTr)aStd'
+            }
+            url 'https://packages.aliyun.com/maven/repository/2234656-release-njIpiN/'
         }
+        google()
     }
-
 }
 
-version = '1.0.9'
-group = "com.azeesoft.lib.colorpicker"
 
-dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    testCompile 'junit:junit:4.12'
-    compile 'com.android.support:appcompat-v7:23.1.1'
-    compile 'com.android.support:design:23.1.1'
-}
+// *********************************************************************
+apply plugin: 'maven'
+apply plugin: 'signing' //使用signing plugin做数字签名
 
-task sourcesJar(type: Jar) {
-    from android.sourceSets.main.java.srcDirs
-    classifier = 'sources'
-}
+//定义GroupID和Version，ArtefactID会自动使用Project名
+group = 'com.hianzuo.android'
+version = '1.0.1'
 
-task javadoc(type: Javadoc) {
-    source = android.sourceSets.main.java.srcDirs
-    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
-    failOnError false
-}
-
-task javadocJar(type: Jar, dependsOn: javadoc) {
-    classifier = 'javadoc'
-    from javadoc.destinationDir
+repositories {
+    mavenCentral();
 }
 
 artifacts {
-    archives javadocJar
-    archives sourcesJar
+    archives file('LibColorPicker.aar')
+}
+signing {
+    sign configurations.archives
 }
 
-bintray {
-user = 'azeesoft'
-    key = '3d45a2cb273fea293793d6f337b755bb2e121cfa'
-    pkg {
-        repo = 'maven'
-        name = 'com.azeesoft.lib.colorpicker'
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            //为Pom文件做数字签名
+            beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
 
-        version {
-            name = 'CP-1.0.9'
-            desc = "Added additional check for saving and loading last color"
-            released  = new Date()
-            vcsTag = '1.0.9'
+            //指定项目部署到的中央库地址，UserName和Password就是Part 1中注册的账号。
+            repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
+                authentication(userName: ossrhUsername, password: ossrhPassword)
+            }
+            snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
+                authentication(userName: ossrhUsername, password: ossrhPassword)
+            }
+
+            //构造项目的Pom文件，参见Part 2中Pom文件的规范，不要遗漏必填项
+            pom.project {
+                name project.name
+                packaging 'aar'
+                description 'Android Application Log save into file in progress.'
+                url 'https://github.com/hianzuo/android-logger'
+
+                scm {
+                    url 'scm:git@github.com:hianzuo/android-logger.git'
+                    connection 'scm:git@github.com:hianzuo/android-logger.git'
+                    developerConnection 'git@github.com:hianzuo/android-logger.git'
+                }
+
+                licenses {
+                    license {
+                        name 'The Apache Software License, Version 2.0'
+                        url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                        distribution 'hianzuo'
+                    }
+                }
+
+                developers {
+                    developer {
+                        id 'ryanch741'
+                        name 'chenyuan'
+                        email '80950159@qq.com'
+                    }
+                }
+            }
         }
-
-        licenses = ['Apache-2.0']
-        vcsUrl = 'https://github.com/AzeeSoft/AndroidPhotoshopColorPicker.git'
-        websiteUrl = 'https://azeesoft.com/projects/android/libs/ColorPicker'
     }
-    configurations = ['archives']
 }
