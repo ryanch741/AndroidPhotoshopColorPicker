@@ -16,18 +16,18 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onTestClick(View view) {
-        ColorPickerDialog colorPickerDialog= ColorPickerDialog.createColorPickerDialog(
+        ColorPickerDialog dialog= ColorPickerDialog.createColorPickerDialog(
                 this,ColorPickerDialog.DARK_THEME);
-        colorPickerDialog.setOnColorPickedListener(new ColorPickerDialog.OnColorPickedListener() {
+        dialog.setOnColorPickedListener(new ColorPickerDialog.OnColorPickedListener() {
             @Override
             public void onColorPicked(int color, String hexVal) {
                 Toast.makeText(MainActivity.this,"color hex: "+hexVal,Toast.LENGTH_SHORT).show();
             }
         });
-        colorPickerDialog.setInitialColor(Color.parseColor("#ff348018"));
-        colorPickerDialog.setNegativeActionText("取消");
-        colorPickerDialog.setPositiveActionText("确定");
-        colorPickerDialog.setHexaDecimalTextColor(Color.WHITE);
-        colorPickerDialog.show();
+        dialog.setInitialColor(Color.parseColor("#ff348018"));
+        dialog.setNegativeActionText("取消");
+        dialog.setPositiveActionText("确定");
+        dialog.setHexaDecimalTextColor(Color.WHITE);
+        dialog.show();
     }
 }

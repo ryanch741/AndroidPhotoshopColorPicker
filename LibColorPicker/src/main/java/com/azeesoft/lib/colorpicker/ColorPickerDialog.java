@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.view.ContextThemeWrapper;
 import android.support.v7.widget.AppCompatButton;
@@ -89,6 +90,7 @@ public class ColorPickerDialog extends Dialog {
 
     private ColorPickerDialog(Context context, int theme) {
         super(context, theme);
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         handler = new Handler();
         init(context);
     }
@@ -223,7 +225,6 @@ public class ColorPickerDialog extends Dialog {
 
             @Override
             public void afterTextChanged(Editable s) {
-//
                 if (skipHexValChange) {
                     skipHexValChange = false;
                 } else {
@@ -470,7 +471,7 @@ public class ColorPickerDialog extends Dialog {
         color = Color.argb(opacity, Color.red(color), Color.green(color), Color.blue(color));
         colorPreviewBox.setBackgroundColor(color);
 
-        mHexVal = "#" + Integer.toHexString(color);
+        mHexVal = ("#" + Integer.toHexString(color)).toUpperCase();
 
         //System.out.println("Retrieved Color: " + color + " (#" + mHexVal + ")");
 
@@ -493,7 +494,7 @@ public class ColorPickerDialog extends Dialog {
     private void setHexValText(String s) {
         s = s.replace("#", "");
         skipHexValChange = true;
-        hexVal.setText(s);
+        hexVal.setText(s.toUpperCase());
     }
 
 
@@ -585,7 +586,8 @@ public class ColorPickerDialog extends Dialog {
      * @param color Color to be applied to the last color and current color in the ColorPicker
      */
     public void setLastColor(int color) {
-        setLastColor("#" + Integer.toHexString(color));
+        String hexVal = "#" + Integer.toHexString(color);
+        setLastColor(hexVal.toUpperCase());
     }
 
     /**
