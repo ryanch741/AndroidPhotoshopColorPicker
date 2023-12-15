@@ -471,7 +471,7 @@ public class ColorPickerDialog extends Dialog {
         color = Color.argb(opacity, Color.red(color), Color.green(color), Color.blue(color));
         colorPreviewBox.setBackgroundColor(color);
 
-        mHexVal = ("#" + Integer.toHexString(color)).toUpperCase();
+        mHexVal = argbToHexVal(color);
 
         //System.out.println("Retrieved Color: " + color + " (#" + mHexVal + ")");
 
@@ -489,6 +489,18 @@ public class ColorPickerDialog extends Dialog {
         green.setText("G: " + Color.green(color));
         blue.setText("B: " + Color.blue(color));
         alpha.setText("A: " + Color.alpha(color));
+    }
+
+    private String argbToHexVal(int color) {
+        StringBuilder hex = new StringBuilder(
+                Integer.toHexString(color));
+        if (hex.length() < 8) {
+            int len = 8 - hex.length();
+            for (int i = 0; i < len; i++) {
+                hex.insert(0, "0");
+            }
+        }
+        return ("#" + hex).toUpperCase();
     }
 
     private void setHexValText(String s) {
@@ -586,8 +598,7 @@ public class ColorPickerDialog extends Dialog {
      * @param color Color to be applied to the last color and current color in the ColorPicker
      */
     public void setLastColor(int color) {
-        String hexVal = "#" + Integer.toHexString(color);
-        setLastColor(hexVal.toUpperCase());
+        setLastColor(argbToHexVal(color));
     }
 
     /**
